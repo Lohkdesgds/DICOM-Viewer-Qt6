@@ -22,9 +22,11 @@ qt_standard_project_setup()
 qt_add_executable(${PROJECT_NAME}
     include/window.hpp
     include/dcm_file.hpp
+    include/graphic_view.hpp
 
     src/window.cpp
     src/dcm_file.cpp
+    src/graphic_view.cpp
     src/main.cpp
 )
 

@@ -1,28 +1,55 @@
 
 #include "dcm_file.hpp"
 
-#include <dcmtk/dcmimgle/dcmimage.h>
 #include <dcmtk/dcmdata/dcdeftag.h>
 
 #include <QDebug>
 
 #include <climits>
 #include <vector>
+#include <algorithm>
 
-bool DCMFile::open(const QString& fileName)
-{
+static const std::pair<DcmTagKey, const char8_t*> dataset_metadata[] = {
+    { DCM_PatientName,                  u8"Nome do Paciente" },
+    { DCM_PatientID,                    u8"ID do Paciente" },
+    { DCM_PatientBirthDate,             u8"Data de Nascimento do Paciente" },
+    { DCM_PatientSex,                   u8"Sexo do Paciente" },
+    { DCM_StudyDate,                    u8"Data do Estudo" },
+    { DCM_StudyTime,                    u8"Hora do Estudo" },
+    { DCM_AccessionNumber,              u8"Número de Acesso" },
+    { DCM_StudyDescription,             u8"Descrição do Estudo" },
+    { DCM_StudyInstanceUID,             u8"UID da Instância do Estudo" },
+    { DCM_Modality,                     u8"Modalidade" },
+    { DCM_SeriesDescription,            u8"Descrição da Série" },
+    { DCM_SeriesInstanceUID,            u8"UID da Instância da Série" },
+    { DCM_SeriesNumber,                 u8"Número da Série" },
+    { DCM_SOPClassUID,                  u8"UID da Classe SOP" },
+    { DCM_SOPInstanceUID,               u8"UID da Instância SOP" },
+    { DCM_Rows,                         u8"Linhas" },
+    { DCM_Columns,                      u8"Colunas" },
+    { DCM_BitsAllocated,                u8"Bits Alocados" },
+    { DCM_BitsStored,                   u8"Bits Armazenados" },
+    { DCM_SamplesPerPixel,              u8"Amostras por Pixel" },
+    { DCM_PhotometricInterpretation,    u8"Interpretação Fotométrica" },
+    { DCM_PixelRepresentation,          u8"Representação de Pixel" },
+    { DCM_Manufacturer,                 u8"Fabricante" },
+    { DCM_InstitutionName,              u8"Nome da Instituição" },
+};
+
+static const std::pair<DcmTagKey, const char8_t*> metainfo_metadata[] = {
+    { DCM_TransferSyntaxUID,            u8"Transfer Syntax UID" }
+};
+
+
+bool DCMFile::open(const QString& filename) {
     close();
 
     auto file = std::make_unique<DcmFileFormat>();
 
-    const QByteArray encodedFileName = fileName.toLocal8Bit();
+    const QByteArray filename_utf8 = filename.toLocal8Bit();
+    const OFCondition status = file->loadFile(filename_utf8.constData());
 
-    const OFCondition status = file->loadFile(
-        encodedFileName.constData()
-    );
-
-    if (status.bad())
-    {
+    if (status.bad()) {
         qWarning().noquote()
             << "DCMTK: Failed to open DICOM file:"
             << status.text();
@@ -30,254 +57,235 @@ bool DCMFile::open(const QString& fileName)
         return false;
     }
 
-    m_file_name = fileName;
+    m_file_name = filename;
     m_file = std::move(file);
-
-    printMetadata();
 
     return true;
 }
 
-void DCMFile::close()
-{
+void DCMFile::close() {
+    m_dicom.reset();
+
+    m_dicom_window_presets = 0;
+    m_metadata_cache.clear();
+
     m_file.reset();
     m_file_name.clear();
 }
 
-bool DCMFile::isOpen() const noexcept
-{
+bool DCMFile::isOpen() const noexcept {
     return m_file != nullptr;
 }
 
-QString DCMFile::fileName() const
-{
+QString DCMFile::fileName() const {
     return m_file_name;
 }
 
-DcmDataset* DCMFile::dataset() noexcept
-{
-    return m_file ? m_file->getDataset() : nullptr;
-}
-
-const DcmDataset* DCMFile::dataset() const noexcept
-{
-    return m_file ? m_file->getDataset() : nullptr;
-}
-
-QImage DCMFile::readImage(QString* error)
-{
-    if (!m_file)
-    {
-        if (error)
-            *error = "No DICOM file is currently open.";
-
+QImage DCMFile::readImage(QString& error) {    
+    if (!m_file) {
+        error = u8"Nenhuma imagem está aberta neste momento";
         return {};
     }
 
-    DcmDataset* ds = dataset();
+    if (!m_dicom) {
+        loadMetadata();
 
-    const auto printAttribute = [ds](const DcmTagKey& tag, const char* name) {
-        OFString value;
+        DcmDataset* ds = m_file->getDataset();
 
-        if (ds->findAndGetOFString(tag, value).good())
-        {
-            qInfo().noquote()
-                << name << ":" << value.c_str();
+        if (m_metadata_cache.empty()) {
+            error = u8"Dados esperados não encontrados";
+            return {};
         }
-        else
-        {
-            qInfo().noquote()
-                << name << ": MISSING";
+
+        if (!ds || !ds->tagExists(DCM_PixelData)) {
+            error = u8"O arquivo não tem dados de imagem.";
+            return {};
         }
-    };
 
-    printAttribute(DCM_SOPClassUID, "SOP Class UID");
-    printAttribute(DCM_Modality, "Modality");
-    printAttribute(DCM_Rows, "Rows");
-    printAttribute(DCM_Columns, "Columns");
-    printAttribute(DCM_BitsAllocated, "Bits Allocated");
-    printAttribute(DCM_BitsStored, "Bits Stored");
-    printAttribute(DCM_SamplesPerPixel, "Samples Per Pixel");
-    printAttribute(DCM_PhotometricInterpretation, "Photometric Interpretation");
-    printAttribute(DCM_PixelRepresentation, "Pixel Representation");
+        m_dicom = std::make_unique<DicomImage>(m_file.get(), EXS_Unknown);
 
-    if (!ds)
-    {
-        if (error)
-            *error = "DICOM dataset is unavailable.";
+        if (m_dicom->getStatus() != EIS_Normal) {
+            qWarning() << "DCMTK image status:"
+                       << m_dicom->getStatus();
 
-        return {};
-    }
+            qWarning() << "DCMTK image status description:"
+                       << DicomImage::getString(m_dicom->getStatus());
 
-    if (!ds->tagExists(DCM_PixelData))
-    {
-        if (error)
-            *error = "DICOM file does not contain PixelData.";
-
-        return {};
-    }
-
-    // Create the DCMTK image representation from our loaded dataset.
-    // EXS_Unknown is appropriate when passing a DcmFileFormat.
-    DicomImage dicomImage(m_file.get(), EXS_Unknown);
-
-    if (dicomImage.getStatus() != EIS_Normal)
-    {
-        qWarning() << "DCMTK image status:"
-                << dicomImage.getStatus();
-
-        qWarning() << "DCMTK image status description:"
-                << DicomImage::getString(dicomImage.getStatus());
-
-        if (error)
-        {
-            *error = QString::fromLocal8Bit(
-                DicomImage::getString(dicomImage.getStatus())
+            error = QString::fromLocal8Bit(
+                DicomImage::getString(m_dicom->getStatus())
             );
+
+            m_dicom.reset();
+            m_dicom_window_presets = 0;
+            return {};
         }
 
+        m_dicom_window_presets = m_dicom->getWindowCount();
+
+        double center{}, width{};
+
+        if (!m_dicom->getWindow(center, width))
+            m_dicom->setMinMaxWindow();
+    }
+
+    const unsigned long dicom_width = m_dicom->getWidth();
+    const unsigned long dicom_height = m_dicom->getHeight();
+
+    if (dicom_width == 0 || dicom_height == 0 ||
+        dicom_width > static_cast<unsigned long>(INT_MAX) ||
+        dicom_height > static_cast<unsigned long>(INT_MAX)) {
+        error = u8"Dimensões da imagem inválidas ou desconhecidas.";
         return {};
     }
 
-    const unsigned long dicomWidth = dicomImage.getWidth();
-    const unsigned long dicomHeight = dicomImage.getHeight();
+    const int width = static_cast<int>(dicom_width);
+    const int height = static_cast<int>(dicom_height);
 
-    if (dicomWidth == 0 || dicomHeight == 0 ||
-        dicomWidth > static_cast<unsigned long>(INT_MAX) ||
-        dicomHeight > static_cast<unsigned long>(INT_MAX))
-    {
-        if (error)
-            *error = "Invalid or unsupported DICOM image dimensions.";
+    constexpr int output_bits = 8;
 
+    const unsigned long output_size = m_dicom->getOutputDataSize(output_bits);
+
+    if (output_size == 0) {
+        error = u8"Falha ao determinar dados sobre os pixels da imagem";
         return {};
     }
 
-    const int width = static_cast<int>(dicomWidth);
-    const int height = static_cast<int>(dicomHeight);
+    std::vector<Uint8> pixel_data(output_size);
 
-    // Request 8-bit output for convenient QImage conversion.
-    constexpr int outputBits = 8;
-
-    const unsigned long outputSize =
-        dicomImage.getOutputDataSize(outputBits);
-
-    if (outputSize == 0)
-    {
-        if (error)
-            *error = "Could not determine DICOM pixel data size.";
-
-        return {};
-    }
-
-    // Allocate a buffer owned by our application.
-    std::vector<Uint8> pixelData(outputSize);
-
-    // Render the first frame (frame index 0).
-    // planar = 0 means interleaved RGB for color images.
-    if (!dicomImage.getOutputData(
-            pixelData.data(),
-            outputSize,
-            outputBits,
+    // Currently rendering the first frame.
+    if (!m_dicom->getOutputData(
+            pixel_data.data(),
+            output_size,
+            output_bits,
             0,
-            0))
-    {
-        if (error)
-            *error = "DCMTK failed to render the pixel data.";
-
+            0)) {
+        error = u8"Biblioteca falhou em renderizar imagem.";
         return {};
     }
 
-    const bool monochrome = dicomImage.isMonochrome();
+    const bool monochrome = m_dicom->isMonochrome();
 
     const QImage::Format format = monochrome
         ? QImage::Format_Grayscale8
         : QImage::Format_RGB888;
 
-    const qsizetype bytesPerLine = monochrome
+    const qsizetype bytes_per_line = monochrome
         ? static_cast<qsizetype>(width)
         : static_cast<qsizetype>(width) * 3;
 
-    // Construct a QImage referencing our temporary buffer.
-    // copy() is important: the returned image must own its pixels.
     const QImage image(
-        pixelData.data(),
+        pixel_data.data(),
         width,
         height,
-        bytesPerLine,
+        bytes_per_line,
         format
     );
 
-    if (image.isNull())
-    {
-        if (error)
-            *error = "Could not create the Qt image.";
-
+    if (image.isNull()) {
+        error = u8"Falha ao criar a imagem em memória.";
         return {};
     }
 
     return image.copy();
 }
 
-std::vector<DCMFile::MetadataEntry> DCMFile::metadata()
+std::vector<DCMFile::MetadataEntry> DCMFile::metadata() {
+    std::vector<DCMFile::MetadataEntry> temp;
+    for(const auto& i : m_metadata_cache)
+        temp.push_back(i.second);
+    return temp;
+}
+
+QString DCMFile::getPatientName() const {
+    const auto it = std::find_if(m_metadata_cache.begin(), m_metadata_cache.end(), [](auto& p){ return p.first == DCM_PatientName;});
+    if (it != m_metadata_cache.end()) return it->second.second;
+    return u8"Desconhecido";
+}
+
+QString DCMFile::getDate() const {
+    const auto it = std::find_if(m_metadata_cache.begin(), m_metadata_cache.end(), [](auto& p){ return p.first == DCM_StudyDate;});
+    if (it != m_metadata_cache.end()) return it->second.second;
+    return u8"Desconhecido";
+}
+
+bool DCMFile::supportWindowing() const noexcept {
+    return m_dicom && m_dicom->isMonochrome();
+}
+
+bool DCMFile::setWindow(double center, double width)
 {
-    std::vector<MetadataEntry> result;
+    if (!m_dicom || !m_dicom->isMonochrome())
+        return false;
+
+    if (!std::isfinite(center) ||
+        !std::isfinite(width) ||
+        width < 1.0) {
+        return false;
+    }
+
+    return m_dicom->setWindow(center, width) != 0;
+}
+
+double DCMFile::getWindowCenter() const noexcept {
+    double center{}, width{};
+
+    if (m_dicom)
+        m_dicom->getWindow(center, width);
+
+    return center;
+}
+
+double DCMFile::getWindowWidth() const noexcept {
+    double center{}, width{};
+
+    if (m_dicom)
+        m_dicom->getWindow(center, width);
+
+    return width;
+}
+
+unsigned long DCMFile::windowCount() const noexcept {
+    return m_dicom_window_presets;
+}
+
+bool DCMFile::setDicomWindow(unsigned long index) {
+    return m_dicom &&
+           index < m_dicom->getWindowCount() &&
+           m_dicom->setWindow(index) != 0;
+}
+
+bool DCMFile::resetWindow() {
+    if (!m_dicom || !m_dicom->isMonochrome())
+        return false;
+
+    m_dicom->setMinMaxWindow();
+
+    return true;
+}
+
+void DCMFile::loadMetadata() {
+    m_metadata_cache.clear();
 
     if (!m_file)
-        return result;
+        return;
 
     DcmDataset* ds = m_file->getDataset();
     DcmMetaInfo* meta = m_file->getMetaInfo();
 
-    const auto add = [&result](DcmItem* item, const DcmTagKey& tag, const QString& label) {
-        if (!item)
-            return;
+    if (!ds) return;
 
+    const auto add = [this](DcmItem* item, const DcmTagKey& tag, const QString& label) {
         OFString value;
-
         if (item->findAndGetOFString(tag, value).good())
-            result.emplace_back(label, QString::fromLocal8Bit(value.c_str()));
+            m_metadata_cache.push_back({
+                tag,
+                MetadataEntry{label, QString::fromLocal8Bit(value.c_str())}
+            });
     };
 
-    add(ds, DCM_PatientName, "Patient Name");
-    add(ds, DCM_PatientID, "Patient ID");
-    add(ds, DCM_PatientBirthDate, "Patient Birth Date");
-    add(ds, DCM_PatientSex, "Patient Sex");
+    for(const auto& [tag, name] : dataset_metadata)
+        add(ds, tag, name);
 
-    add(ds, DCM_StudyDate, "Study Date");
-    add(ds, DCM_StudyTime, "Study Time");
-    add(ds, DCM_AccessionNumber, "Accession Number");
-    add(ds, DCM_StudyDescription, "Study Description");
-    add(ds, DCM_StudyInstanceUID, "Study Instance UID");
-
-    add(ds, DCM_Modality, "Modality");
-    add(ds, DCM_SeriesDescription, "Series Description");
-    add(ds, DCM_SeriesInstanceUID, "Series Instance UID");
-    add(ds, DCM_SeriesNumber, "Series Number");
-
-    add(ds, DCM_SOPClassUID, "SOP Class UID");
-    add(ds, DCM_SOPInstanceUID, "SOP Instance UID");
-    add(ds, DCM_Rows, "Rows");
-    add(ds, DCM_Columns, "Columns");
-    add(ds, DCM_BitsAllocated, "Bits Allocated");
-    add(ds, DCM_BitsStored, "Bits Stored");
-    add(ds, DCM_SamplesPerPixel, "Samples Per Pixel");
-    add(ds, DCM_PhotometricInterpretation, "Photometric Interpretation");
-    add(ds, DCM_PixelRepresentation, "Pixel Representation");
-
-    add(ds, DCM_Manufacturer, "Manufacturer");
-    add(ds, DCM_InstitutionName, "Institution Name");
-
-    add(meta, DCM_TransferSyntaxUID, "Transfer Syntax UID");
-
-    return result;
-}
-
-void DCMFile::printMetadata()
-{
-    qInfo() << "\n========== DICOM Metadata ==========";
-
-    for (const auto& [name, value] : metadata())
-        qInfo().noquote() << name << ":" << value;
-
-    qInfo() << "====================================\n";
+    for(const auto& [tag, name] : metainfo_metadata)
+        add(meta, tag, name);
 }

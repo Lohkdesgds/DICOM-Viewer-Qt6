@@ -1,6 +1,7 @@
 
 #pragma once
 
+#include <dcmtk/dcmimgle/dcmimage.h>
 #include <dcmtk/dcmdata/dctk.h>
 
 #include <QString>
@@ -9,6 +10,7 @@
 #include <memory>
 #include <utility>
 #include <vector>
+#include <unordered_map>
 
 class DCMFile {
 public:
@@ -16,22 +18,37 @@ public:
 
     DCMFile() = default;
 
-    bool open(const QString& fileName);
+    bool open(const QString& filename);
     void close();
 
-    [[nodiscard]] bool isOpen() const noexcept;
+    bool isOpen() const noexcept;
 
-    [[nodiscard]] QString fileName() const;
+    QString fileName() const;
 
-    [[nodiscard]] DcmDataset* dataset() noexcept;
-    [[nodiscard]] const DcmDataset* dataset() const noexcept;
+    QImage readImage(QString& error);
 
-    [[nodiscard]] QImage readImage(QString* error = nullptr);
+    std::vector<MetadataEntry> metadata();
 
-    [[nodiscard]] std::vector<MetadataEntry> metadata();
+    QString getPatientName() const;
+    QString getDate() const;
+
+    bool supportWindowing() const noexcept;
+
+    bool setWindow(double center, double width);
+
+    double getWindowCenter() const noexcept;
+    double getWindowWidth() const noexcept;
+
+    unsigned long windowCount() const noexcept;
+    bool setDicomWindow(unsigned long index);
+
+    bool resetWindow();
 private:
-    void printMetadata();
+    void loadMetadata();
 
     QString m_file_name;
+    std::unique_ptr<DicomImage> m_dicom;
     std::unique_ptr<DcmFileFormat> m_file;
+    std::vector<std::pair<DcmTagKey, MetadataEntry>> m_metadata_cache;
+    uint32_t m_dicom_window_presets = 0;
 };
