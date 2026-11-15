@@ -49,4 +49,14 @@ FetchContent_Declare(
     GIT_PROGRESS TRUE
 )
 
+if(MSVC)
+    set(DCMTK_OVERWRITE_WIN32_COMPILER_FLAGS
+        ON CACHE BOOL "" FORCE
+    )
+
+    set(DCMTK_COMPILE_WIN32_MULTITHREADED_DLL
+        ON CACHE BOOL "" FORCE
+    )
+endif()
+
 FetchContent_MakeAvailable(dcmtk)
