@@ -23,6 +23,12 @@ qt_add_executable(${PROJECT_NAME}
     src/main.cpp
 )
 
+if(APPLE)
+    set_target_properties(${PROJECT_NAME} PROPERTIES
+        MACOSX_BUNDLE TRUE
+    )
+endif()
+
 target_include_directories(${PROJECT_NAME}
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/include

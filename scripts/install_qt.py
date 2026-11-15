@@ -106,7 +106,8 @@ def prepare_aqt():
             "pip",
             "install",
             "--upgrade",
-            "aqtinstall>=3.3.0,<4"
+            "pip",
+            "git+https://github.com/miurahr/aqtinstall.git@refs/pull/1000/head"
         ])
 
     return aqt
