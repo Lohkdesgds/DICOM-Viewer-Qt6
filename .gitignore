@@ -1,2 +1,27 @@
-test/
+
+# Downloaded Qt SDK
+.qt/
+
+# Python virtual environments
+.tools/
+__pycache__/
+*.pyc
+
+# CMake
 build/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Deployment
+dist/
+
+# Generated releases
+releases/
+
+# Testing files
+test/
+
+# Local install
+aqtinstall.log
