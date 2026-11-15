@@ -11,6 +11,8 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+include(cmake/installDCMTK.cmake)
+
 find_package(Qt6 6.12.0 EXACT REQUIRED
     COMPONENTS Core Widgets
 )
@@ -19,7 +21,10 @@ qt_standard_project_setup()
 
 qt_add_executable(${PROJECT_NAME}
     include/window.hpp
+    include/dcm_file.hpp
+
     src/window.cpp
+    src/dcm_file.cpp
     src/main.cpp
 )
 
@@ -44,8 +49,14 @@ else()
     )
 endif()
 
-target_link_libraries(${PROJECT_NAME}
-    PRIVATE Qt6::Widgets
+target_link_libraries(${PROJECT_NAME} PRIVATE 
+    Qt6::Widgets
+    
+    dcmdata
+    dcmimgle
+    dcmimage
+    dcmjpeg
+    dcmjpls
 )
 
 # Install application
