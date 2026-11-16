@@ -13,7 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
-APP_NAME = "QtSeniorChallenge"
+APP_NAME = "DICOM-Viewer-Qt6"
 APP_VERSION = os.environ.get("APP_VERSION", "1.0.0")
 QT_VERSION = os.environ.get("QT_VERSION", "6.12.0")
 

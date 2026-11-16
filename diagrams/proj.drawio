@@ -1,0 +1,153 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Página-1" id="g1_RpcKCMgrMuALRJodT">
+    <mxGraphModel dx="1135" dy="637" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-1" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=29;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;whiteSpace=wrap;" value="&amp;lt;&amp;lt; Qt &amp;gt;&amp;gt;&lt;div&gt;QMainWindow&lt;/div&gt;" vertex="1">
+          <mxGeometry height="54" width="120" x="40" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-10" edge="1" parent="1" source="4OgIQckrDnS9CqSH0l-X-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;endArrow=block;endFill=0;" target="4OgIQckrDnS9CqSH0l-X-1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="100" y="420" />
+              <mxPoint x="100" y="420" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-40" edge="1" parent="1" source="4OgIQckrDnS9CqSH0l-X-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;labelPadding=0 4;dashed=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="300" y="290" />
+              <mxPoint x="300" y="290" />
+            </Array>
+            <mxPoint x="440" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-41" connectable="0" parent="4OgIQckrDnS9CqSH0l-X-40" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;labelPadding=0 4;" value="displays" vertex="1">
+          <mxGeometry relative="1" x="-0.0713" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-6" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="MainWindow" vertex="1">
+          <mxGeometry height="358" width="220" x="40" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-7" parent="4OgIQckrDnS9CqSH0l-X-6" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;-m_properties_action : QAction*&lt;/div&gt;&lt;div&gt;-m_image_view : GraphicView*&lt;/div&gt;&lt;div&gt;-m_window_dock : QDockWidget*&lt;/div&gt;&lt;div&gt;-m_center_slider : QSlider*&lt;/div&gt;&lt;div&gt;-m_width_slider : QSlider*&lt;/div&gt;&lt;div&gt;-m_center_spin : QDoubleSpinBox*&lt;/div&gt;&lt;div&gt;-m_width_spin : QDoubleSpinBox*&lt;/div&gt;&lt;div&gt;-m_window_presets : QComboBox*&lt;/div&gt;&lt;div&gt;-m_dcm_file : DCMFile&lt;/div&gt;&lt;div&gt;-m_center_min double&lt;/div&gt;&lt;div&gt;-m_center_max double&lt;/div&gt;&lt;div&gt;-m_width_max double&lt;/div&gt;&lt;div&gt;-m_is_fullscreen bool&lt;/div&gt;" vertex="1">
+          <mxGeometry height="194" width="220" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-8" parent="4OgIQckrDnS9CqSH0l-X-6" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;labelPerimeter=1;" value="" vertex="1">
+          <mxGeometry height="8" width="220" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-9" parent="4OgIQckrDnS9CqSH0l-X-6" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;-showImageProperties() : void&lt;/div&gt;&lt;div&gt;-openImage() : void&lt;/div&gt;&lt;div&gt;-quitApplication() : void&lt;/div&gt;&lt;div&gt;-setupWindowLevelDock() : void&lt;/div&gt;&lt;div&gt;-updateWindowLevelControls() : void&lt;/div&gt;&lt;div&gt;-applyWindowLevel() : void&lt;/div&gt;&lt;div&gt;-refreshDicomImage() : void&lt;/div&gt;&lt;div&gt;-populateWindowPresets() : void&lt;/div&gt;" vertex="1">
+          <mxGeometry height="130" width="220" y="228" as="geometry" />
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-33" edge="1" parent="1" source="4OgIQckrDnS9CqSH0l-X-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;endArrow=block;endFill=0;" target="4OgIQckrDnS9CqSH0l-X-24">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="580" y="67" />
+              <mxPoint x="580" y="67" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-12" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="GraphicView" vertex="1">
+          <mxGeometry height="198" width="220" x="360" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-13" parent="4OgIQckrDnS9CqSH0l-X-12" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(#000000, var(--ge-light-color, #ffffff));&quot;&gt;-m_scene: QGraphicsScene*&lt;/span&gt;&lt;/div&gt;&lt;div&gt;-m_pixelmap: QGraphicsPixmapItem*&lt;/div&gt;&lt;div&gt;-m_zoom: qreal&lt;/div&gt;" vertex="1">
+          <mxGeometry height="64" width="220" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-14" parent="4OgIQckrDnS9CqSH0l-X-12" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;labelPerimeter=1;" value="" vertex="1">
+          <mxGeometry height="8" width="220" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-15" parent="4OgIQckrDnS9CqSH0l-X-12" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;+setImage(QPixmap) : void&lt;/div&gt;&lt;div&gt;+clearImage() : void&lt;/div&gt;&lt;div&gt;+fitImage() : void&lt;/div&gt;&lt;div&gt;+resetZoom() : void&lt;/div&gt;&lt;div&gt;#wheelEvent(QWheelEvent*) : void&lt;/div&gt;&lt;div&gt;#resizeEvent(QResizeEvent*) : void&lt;/div&gt;" vertex="1">
+          <mxGeometry height="100" width="220" y="98" as="geometry" />
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-21" edge="1" parent="1" source="4OgIQckrDnS9CqSH0l-X-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;endArrow=diamond;endFill=1;exitX=0.001;exitY=0.24;exitDx=0;exitDy=0;exitPerimeter=0;" target="4OgIQckrDnS9CqSH0l-X-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-23" connectable="0" parent="4OgIQckrDnS9CqSH0l-X-21" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;labelPadding=0 4;" value="owns" vertex="1">
+          <mxGeometry relative="1" x="0.04" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-16" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="DCMFile&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="380" width="240" x="360" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-17" parent="4OgIQckrDnS9CqSH0l-X-16" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;-m_file_name : QString&lt;/div&gt;&lt;div&gt;-m_dicom : unique_ptr&amp;lt;DicomImage&amp;gt;&lt;/div&gt;&lt;div&gt;-m_file : unique_ptr&amp;lt;DcmFileFormat&amp;gt;&lt;/div&gt;&lt;div&gt;-m_metadata_cache : vector&amp;lt;pair&amp;lt;DcmTagKey, MetadataEntry&amp;gt;&amp;gt;&lt;/div&gt;&lt;div&gt;-m_dicom_window_presets : uint32_t&lt;/div&gt;" vertex="1">
+          <mxGeometry height="104" width="240" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-18" parent="4OgIQckrDnS9CqSH0l-X-16" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;labelPerimeter=1;" value="" vertex="1">
+          <mxGeometry height="8" width="240" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-19" parent="4OgIQckrDnS9CqSH0l-X-16" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;+open(QString) : bool&lt;/div&gt;&lt;div&gt;+close() : void&lt;/div&gt;&lt;div&gt;+isOpen() : bool&lt;/div&gt;&lt;div&gt;+fileName() : QString&lt;/div&gt;&lt;div&gt;+readImage(QString) : QImage&lt;/div&gt;&lt;div&gt;+metadata() : vector&amp;lt;MetadataEntry&amp;gt;&lt;/div&gt;&lt;div&gt;+getPatientName() : QString&lt;/div&gt;&lt;div&gt;+getDate() : QString&lt;/div&gt;&lt;div&gt;+supportWindowing() : bool&lt;/div&gt;&lt;div&gt;+setWindow(double, double) : bool&lt;/div&gt;&lt;div&gt;+getWindowCenter() : double&lt;/div&gt;&lt;div&gt;+getWindowWidth() : double&lt;/div&gt;&lt;div&gt;+windowCount() : unsigned long&lt;/div&gt;&lt;div&gt;+setDicomWindow(unsigned long) : bool&lt;/div&gt;&lt;div&gt;+resetWindow() : bool&lt;/div&gt;&lt;div&gt;-loadMetadata() : void&lt;/div&gt;" vertex="1">
+          <mxGeometry height="242" width="240" y="138" as="geometry" />
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-20" edge="1" parent="1" source="4OgIQckrDnS9CqSH0l-X-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1.001;entryY=0.377;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;labelPadding=0 4;endArrow=diamond;endFill=1;" target="4OgIQckrDnS9CqSH0l-X-7">
+          <mxGeometry relative="1" x="-0.0609" as="geometry" />
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-22" connectable="0" parent="4OgIQckrDnS9CqSH0l-X-20" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;labelPadding=0 4;" value="owns" vertex="1">
+          <mxGeometry relative="1" x="0.0455" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-24" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=29;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;whiteSpace=wrap;" value="&amp;lt;&amp;lt; Qt &amp;gt;&amp;gt;&lt;div&gt;QGraphicView&lt;/div&gt;" vertex="1">
+          <mxGeometry height="54" width="120" x="640" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-25" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=29;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;whiteSpace=wrap;" value="&amp;lt;&amp;lt; Qt &amp;gt;&amp;gt;&lt;div&gt;QGraphicScene&lt;/div&gt;" vertex="1">
+          <mxGeometry height="54" width="120" x="640" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-28" edge="1" parent="1" source="4OgIQckrDnS9CqSH0l-X-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;endArrow=diamond;endFill=1;" target="4OgIQckrDnS9CqSH0l-X-25">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-34" connectable="0" parent="4OgIQckrDnS9CqSH0l-X-28" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;labelPadding=0 4;" value="owns" vertex="1">
+          <mxGeometry relative="1" x="-0.0205" y="-2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-26" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=29;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;whiteSpace=wrap;" value="&amp;lt;&amp;lt; Qt &amp;gt;&amp;gt;&lt;div&gt;QGraphicsPixMapItem&lt;/div&gt;" vertex="1">
+          <mxGeometry height="54" width="140" x="630" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-30" edge="1" parent="1" source="4OgIQckrDnS9CqSH0l-X-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1.003;entryY=0.09;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;labelPadding=0 4;endArrow=diamond;endFill=1;" target="4OgIQckrDnS9CqSH0l-X-15">
+          <mxGeometry relative="1" x="-0.0197" as="geometry" />
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-31" connectable="0" parent="4OgIQckrDnS9CqSH0l-X-30" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;labelPadding=0 4;" value="owns" vertex="1">
+          <mxGeometry relative="1" x="0.0579" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-35" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=29;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;whiteSpace=wrap;" value="&amp;lt;&amp;lt; DCMTK &amp;gt;&amp;gt;&lt;div&gt;DcmFileFormat&lt;/div&gt;" vertex="1">
+          <mxGeometry height="54" width="120" x="680" y="401" as="geometry" />
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-36" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=29;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;whiteSpace=wrap;" value="&amp;lt;&amp;lt; DCMTK &amp;gt;&amp;gt;&lt;div&gt;DicomImage&lt;/div&gt;" vertex="1">
+          <mxGeometry height="54" width="120" x="680" y="479" as="geometry" />
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-37" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=29;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;whiteSpace=wrap;" value="&amp;lt;&amp;lt; Qt &amp;gt;&amp;gt;&lt;div&gt;QImage&lt;/div&gt;" vertex="1">
+          <mxGeometry height="54" width="120" x="440" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-38" edge="1" parent="1" source="4OgIQckrDnS9CqSH0l-X-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.583;entryY=-0.002;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;labelPadding=0 4;dashed=1;endArrow=none;endFill=0;startArrow=classic;startFill=1;" target="4OgIQckrDnS9CqSH0l-X-16">
+          <mxGeometry relative="1" x="0.0146" as="geometry" />
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-39" connectable="0" parent="4OgIQckrDnS9CqSH0l-X-38" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;labelPadding=0 4;" value="produces" vertex="1">
+          <mxGeometry relative="1" x="-0.1178" as="geometry">
+            <mxPoint y="3" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-43" edge="1" parent="1" source="4OgIQckrDnS9CqSH0l-X-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1.003;entryY=0.404;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;labelPadding=0 4;endArrow=diamondThin;endFill=1;" target="4OgIQckrDnS9CqSH0l-X-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-45" connectable="0" parent="4OgIQckrDnS9CqSH0l-X-43" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;labelPadding=0 4;" value="owns" vertex="1">
+          <mxGeometry relative="1" x="-0.0414" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-44" edge="1" parent="1" source="4OgIQckrDnS9CqSH0l-X-36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.999;entryY=0.033;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;labelPadding=0 4;endArrow=diamondThin;endFill=1;" target="4OgIQckrDnS9CqSH0l-X-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4OgIQckrDnS9CqSH0l-X-46" connectable="0" parent="4OgIQckrDnS9CqSH0l-X-44" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;labelPadding=0 4;" value="owns" vertex="1">
+          <mxGeometry relative="1" x="-0.0279" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
