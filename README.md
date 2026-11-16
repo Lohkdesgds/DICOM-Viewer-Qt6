@@ -149,7 +149,7 @@ DICOM Viewer Qt6
 
 ## 1. Script do Python falhou ao baixar / não identificou corretamente o que baixar
 
-Primeiro, verifique se você tem um `virtual env`. Depois, tente instalar manualmente `aqtinstall`. Se algum desses dois falhar, o problema pode ser com a própria instalação do Python. Se por ventura não for isso, pode ser que a própria ferramenta de instalação `aqt` esteja quebrada. Em ambos os casos, a investigação exige passo a passo, tentando replicar o que já dá certo na pipeline automatizada.
+Primeiro, verifique se você tem um `virtual env`. Depois, tente instalar manualmente `aqtinstall`. Se algum desses dois falhar, o problema pode ser com a própria instalação do Python. Se porventura não for isso, pode ser que a própria ferramenta de instalação `aqt` esteja quebrada. Em ambos os casos, a investigação exige passo a passo, tentando replicar o que já dá certo na pipeline automatizada.
 
 ## 2. No MacOS não está abrindo / funcionando corretamente
 
