@@ -87,6 +87,21 @@ App
 
 O foco para executar está na pasta `bin/`, onde você deve encontrar o executável dentro (`DICOM-Viewer-Qt6` ou `DICOM-Viewer-Qt6.exe`).
 
+No MacOS, o formato segue o seguinte:
+
+```
+App
+├─ 📁 DICOM-Viewer-Qt6.app
+│  └─ 📁 Contents
+│    └─ 📁 MacOs
+│      └─ 📦 DICOM-Viewer-Qt6
+├─ 📁 lib
+│  └─ ...
+└─ ...
+```
+
+Só o lugar do executável é outro, mas o resto deve ser semelhante.
+
 > [!NOTE]
 > 
 > Se for copiar ou mover o executável para outro lugar, é melhor copiar todos os arquivos, incluindo as pastas dentro do zip.
