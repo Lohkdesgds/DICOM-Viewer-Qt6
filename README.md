@@ -6,7 +6,7 @@ DICOM Viewer Qt6 é um projeto feito em [Qt6](https://wiki.qt.io/About_Qt) (6.12
 
 # Como compilar
 
-Existe uma [pipeline](./actions/workflows/build.yaml) automatizada que já compila para as 3 plataformas, instalando as bibliotecas necessárias automaticamente e subindo os arquivos para a aba de [releases](./releases).
+Existe uma [pipeline](https://github.com/Lohkdesgds/DICOM-Viewer-Qt6/actions/workflows/build.yaml) automatizada que já compila para as 3 plataformas, instalando as bibliotecas necessárias automaticamente e subindo os arquivos para a aba de [releases](./releases).
 
 Caso você queira compilar você mesmo, siga os passos a seguir:
 
