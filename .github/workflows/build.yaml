@@ -61,11 +61,9 @@ jobs:
         with:
             name: DIST_${{ matrix.os }}
             path: dist/
-
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
-    steps:
-      - name: Make Release
-        uses: LunarisLib/actions/Release@revamp
+            
+      - name: Create Release
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v3
+        with:
+          files: releases/*
